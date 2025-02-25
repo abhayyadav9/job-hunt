@@ -21,7 +21,7 @@ const Navbar = () => {
   const logoutHandler = async () => {
     try {
       dispatch(setLoading(true));
-      const res = await axios.post("https://jobhunt-backend-vtaa.onrender.com/api/v1/user/logout", {
+      const res = await axios.post("https://job-hunt-backend-efee.onrender.com/api/v1/user/logout", {
         withCredentials: true,
       });
 

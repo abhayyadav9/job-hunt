@@ -18,7 +18,7 @@ app.use(express.urlencoded({extended:true}));
 app.use(cookieParser());
 // Define allowed origins (replace with your frontend URLs)
 const allowedOrigins = [
-    "https://job-hunt-45.vercel.app",
+    "https://job-hunt-lime.vercel.app",
     "http://localhost:5173",
   ];
   
