@@ -5,48 +5,93 @@ import { Avatar, AvatarImage } from './ui/avatar'
 import { Badge } from './ui/badge'
 import { useNavigate } from 'react-router-dom'
 
-const Job = ({job}) => {
+const Job = ({ job }) => {
     const navigate = useNavigate();
 
     const daysAgoFunction = (mongodbTime) => {
         const createdAt = new Date(mongodbTime);
-        const currentTime = new Date();
-        const timeDifference = currentTime - createdAt;
-        return Math.floor(timeDifference/(1000*24*60*60));
-    }
+        return Math.floor((Date.now() - createdAt) / (1000 * 86400));
+    };
 
-    
     return (
-        <div className='p-5 rounded-md shadow-xl bg-white border border-gray-100'>
-            <div className='flex items-center justify-between'>
-                <p className='text-sm text-gray-500'>{daysAgoFunction(job?.createdAt) === 0 ? "Today" : `${daysAgoFunction(job?.createdAt)} days ago`}</p>
-                <Button variant="outline" className="rounded-full" size="icon"><Bookmark /></Button>
+        <div className='group p-6 rounded-xl bg-white shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100 hover:border-gray-200'>
+            {/* Header Section */}
+            <div className='flex items-center justify-between mb-4'>
+                <span className='text-xs font-medium text-muted-foreground'>
+                    {daysAgoFunction(job?.createdAt) === 0 ? 
+                    "New today" : 
+                    `${daysAgoFunction(job?.createdAt)}d ago`}
+                </span>
+                <Button 
+                    variant="ghost" 
+                    size="sm"
+                    className="rounded-full p-2 hover:bg-purple-50/50"
+                >
+                    <Bookmark className='w-4 h-4 text-muted-foreground' />
+                </Button>
             </div>
 
-            <div className='flex items-center gap-2 my-2'>
-                <Button className="p-6" variant="outline" size="icon">
-                    <Avatar>
-                        <AvatarImage src={job?.company?.logo || "https://img.freepik.com/free-vector/abstract-logo-flame-shape_1043-44.jpg?w=740&t=st=1729329991~exp=1729330591~hmac=1ea0a1cb47a89fb5bf6fe00753ccc2a58499928367fd7022c9f92be699ed4a81"} />
-                    </Avatar>
-                </Button>
+            {/* Company Info */}
+            <div className='flex items-start gap-4 mb-6'>
+                <Avatar className='w-14 h-14 border-2 border-purple-100'>
+                    <AvatarImage 
+                        src={job?.company?.logo} 
+                        className='object-contain'
+                    />
+                </Avatar>
                 <div>
-                    <h1 className='font-medium text-lg'>{job?.company?.name || "avi & co. pvt. lmt."}</h1>
-                    <p className='text-sm text-gray-500'>India</p>
+                    <h2 className='text-lg font-semibold text-gray-900'>
+                        {job?.company?.name || "Company Name"}
+                    </h2>
+                    <div className='flex items-center gap-2 mt-1'>
+                        <span className='text-sm text-muted-foreground'>
+                            {job?.location || "Location"}
+                        </span>
+                        <span className='text-muted-foreground'>•</span>
+                        <span className='text-sm text-muted-foreground'>
+                            {job?.company?.sector || "Sector"}
+                        </span>
+                    </div>
                 </div>
             </div>
 
-            <div>
-                <h1 className='font-bold text-lg my-2'>{job?.title}</h1>
-                <p className='text-sm text-gray-600'>{job?.description}</p>
+            {/* Job Details */}
+            <div className='mb-6'>
+                <h3 className='text-xl font-bold text-gray-900 mb-2'>
+                    {job?.title}
+                </h3>
+                <p className='text-muted-foreground line-clamp-3'>
+                    {job?.description}
+                </p>
             </div>
-            <div className='flex items-center gap-2 mt-4'>
-                <Badge className={'text-blue-700 font-bold'} variant="ghost">{job?.position} Positions</Badge>
-                <Badge className={'text-[#F83002] font-bold'} variant="ghost">{job?.jobType}</Badge>
-                <Badge className={'text-[#7209b7] font-bold'} variant="ghost">{job?.salary}LPA</Badge>
+
+            {/* Badges */}
+            <div className='flex flex-wrap gap-2 mb-6'>
+                <Badge variant="outline" className='px-3 py-1 bg-purple-50 text-purple-700'>
+                    {job?.position} position{job?.position > 1 ? 's' : ''}
+                </Badge>
+                <Badge variant="outline" className='px-3 py-1 bg-blue-50 text-blue-700'>
+                    {job?.jobType}
+                </Badge>
+                <Badge variant="outline" className='px-3 py-1 bg-green-50 text-green-700'>
+                    ₹{job?.salary} LPA
+                </Badge>
             </div>
-            <div className='flex items-center gap-4 mt-4'>
-                <Button onClick={()=> navigate(`/description/${job._id}`)} variant="outline">Details</Button>
-                <Button className="bg-[#7209b7]">Save For Later</Button>
+
+            {/* Actions */}
+            <div className='flex flex-col sm:flex-row gap-3'>
+                <Button 
+                    onClick={() => navigate(`/description/${job._id}`)}
+                    variant="outline"
+                    className='w-full sm:w-auto px-6 py-3'
+                >
+                    View Details
+                </Button>
+                <Button 
+                    className='w-full sm:w-auto px-6 py-3 bg-purple-600 hover:bg-purple-700'
+                >
+                    Save Position
+                </Button>
             </div>
         </div>
     )
