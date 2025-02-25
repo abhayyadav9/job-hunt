@@ -1,4 +1,4 @@
-const  baseUrl ="https://job-hunt-backend-efee.onrender.com"
+export const  baseUrl ="https://job-hunt-backend-efee.onrender.com"
 export const backend  ='http://localhost:8000'
 
 export const    USER_API_END_POINT=`${baseUrl}/api/v1/user`;
