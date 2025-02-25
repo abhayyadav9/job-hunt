@@ -5,6 +5,7 @@ import cloudinary from "../utils/cloudinary.js";
 export const registerCompany = async (req, res) => {
     try {
         const { companyName } = req.body;
+        console.log(companyName)
         if (!companyName) {
             return res.status(400).json({
                 message: "Company name is required.",
@@ -32,24 +33,40 @@ export const registerCompany = async (req, res) => {
         console.log(error);
     }
 }
+
+
+
 export const getCompany = async (req, res) => {
     try {
-        const userId = req.id; // logged in user id
+        // Should come from auth middleware (typically req.user.id)
+        const userId = req.id; // Changed from req.id to req.user.id
+        
         const companies = await Company.find({ userId });
-        if (!companies) {
-            return res.status(404).json({
-                message: "Companies not found.",
-                success: false
-            })
+        
+        // find() returns empty array if none found, not null
+        if (companies.length === 0) {
+            return res.status(200).json({
+                message: "No companies found for this user",
+                companies: [],
+                success: true
+            });
         }
+
         return res.status(200).json({
             companies,
-            success:true
-        })
+            success: true
+        });
+        
     } catch (error) {
-        console.log(error);
+        console.error("Error fetching companies:", error);
+        return res.status(500).json({
+            message: "Internal server error",
+            success: false
+        });
     }
-}
+};
+
+
 // get company by id
 export const getCompanyById = async (req, res) => {
     try {

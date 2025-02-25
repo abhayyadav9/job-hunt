@@ -11,7 +11,7 @@ const AdminJobsTable = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const filteredJob = allAdminJobs.length >= 0 && allAdminJobs.filter((job) => {
+        const filteredJob = allAdminJobs?.length >= 0 && allAdminJobs?.filter((job) => {
             if (!searchJobByText) return true;
             return job?.name?.toLowerCase().includes(searchJobByText.toLowerCase());
         });
@@ -33,7 +33,7 @@ const AdminJobsTable = () => {
                 <TableBody>
                     {
                         filterJobs?.map((job) => (
-                            <TableRow key={job._id}>
+                            <TableRow key={job?._id}>
                                 <TableCell>{job.company?.name}</TableCell> {/* Assuming company name is in job.companyName */}
                                 <TableCell>{job?.title}</TableCell> {/* Added job role */}
                                 <TableCell>{job.createdAt?.split("T")[0]}</TableCell>

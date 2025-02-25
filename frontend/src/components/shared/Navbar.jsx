@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { toast } from "sonner";
 import { setLoading, setUser } from "@/redux/authSlice";
+import { baseUrl } from "../utils/constant";
 
 const Navbar = () => {
   const { user, loading } = useSelector((store) => store.auth);
@@ -21,7 +22,7 @@ const Navbar = () => {
   const logoutHandler = async () => {
     try {
       dispatch(setLoading(true));
-      const res = await axios.post("https://job-hunt-backend-efee.onrender.com/api/v1/user/logout", {
+      const res = await axios.post(`${baseUrl}/api/v1/user/logout`, {
         withCredentials: true,
       });
 

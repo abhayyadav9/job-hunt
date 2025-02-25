@@ -36,10 +36,10 @@ export const FilterCard = () => {
             <h1 className='font-bold text-lg mb-3'>Filter Jobs</h1>
             <hr className='mb-3 border-gray-300' />
             <RadioGroup value={selectedValue} onValueChange={changeHandler}>
-                {filterData.map((data, index) => (
+                {filterData?.map((data, index) => (
                     <div key={data.filterType} className='mb-4'>
-                        <h1 className='font-semibold text-md mb-2'>{data.filterType}</h1>
-                        {data.array.map((item, idx) => {
+                        <h1 className='font-semibold text-md mb-2'>{data?.filterType}</h1>
+                        {data?.array.map((item, idx) => {
                             const itemId = `id${index}-${idx}`;
                             return (
                                 <div className='flex items-center space-x-2 my-2' key={itemId}>

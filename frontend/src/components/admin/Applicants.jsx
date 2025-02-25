@@ -15,7 +15,7 @@ const Applicants = () => {
     useEffect(() => {
         const fetchApplicants = async () => {
             try {
-                const res = await axios.get(`${APPLICATION_API_END_POINT}/${params.id}/applicants`, {
+                const res = await axios.get(`${APPLICATION_API_END_POINT}/${params?.id}/applicants`, {
                     withCredentials: true,
                 });
                 console.log(res.data.job)
@@ -33,7 +33,7 @@ const Applicants = () => {
         <div>
             <Navbar />
             <div className="max-w-7xl mx-auto">
-                <h1 className="font-bold text-xl">Applicants {applicants.applications?.length}</h1>
+                <h1 className="font-bold text-xl">Applicants {applicants?.applications?.length}</h1>
                 <ApplicantsTable />
             </div>
         </div>

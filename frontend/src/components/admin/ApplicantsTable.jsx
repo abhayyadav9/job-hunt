@@ -61,7 +61,7 @@ const ApplicantsTable = () => {
           <TableBody className="bg-red-40">
             {applicants &&
               applicants?.applications?.map((item) => (
-                <TableRow key={item._id} className="border-b hover:bg-gray-100">
+                <TableRow key={item?._id} className="border-b hover:bg-gray-100">
                   <TableCell className="px-4 py-2 text-gray-700">
                     {item?.applicant?.fullname}
                   </TableCell>
@@ -69,12 +69,12 @@ const ApplicantsTable = () => {
                     {item?.applicant?.email}
                   </TableCell>
                   <TableCell className="px-4 py-2 text-gray-700">
-                    {item.applicant.phoneNumber}
+                    {item.applicant?.phoneNumber}
                   </TableCell>
                   <TableCell className="px-4 py-2 text-blue-600">
                     {item.applicant.profile?.resume ? (
                       <a
-                        href={item.applicant.profile.resume}
+                        href={item.applicant?.profile?.resume}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="underline"
@@ -86,7 +86,7 @@ const ApplicantsTable = () => {
                     )}
                   </TableCell>
                   <TableCell className="px-4 py-2 text-gray-500">
-                    {new Date(item.applicant.createdAt).toLocaleDateString()}
+                    {new Date(item.applicant?.createdAt).toLocaleDateString()}
                   </TableCell>
                   <TableCell className="px-4 py-2 text-right">
                     <Popover>
@@ -101,24 +101,24 @@ const ApplicantsTable = () => {
                       className="to-blue-400 p-2"
                       
                         >
-                          {getStatus.id === item._id
+                          {getStatus?.id === item._id
                             ? getStatus.status.charAt(0).toUpperCase() +
                               getStatus.status.slice(1)
-                            : item.status
-                            ? item.status.charAt(0).toUpperCase() +
-                              item.status.slice(1)
+                            : item?.status
+                            ? item?.status.charAt(0).toUpperCase() +
+                              item?.status.slice(1)
                             : "Pending"}
                         </Badge>
                       </PopoverTrigger>
                       <PopoverContent className="w-32 border shadow-md rounded-lg">
                         <div
-                          onClick={() => statusHandler("Accepted", item._id)}
+                          onClick={() => statusHandler("Accepted", item?._id)}
                           className="px-4 py-2 cursor-pointer hover:bg-gray-200 text-sm text-gray-600"
                         >
                           Accepted
                         </div>
                         <div
-                          onClick={() => statusHandler("Rejected", item._id)}
+                          onClick={() => statusHandler("Rejected", item?._id)}
                           className="px-4 py-2 cursor-pointer hover:bg-gray-200 text-sm text-gray-600"
                         >
                           Rejected
